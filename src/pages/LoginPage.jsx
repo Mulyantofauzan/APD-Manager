@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { authService } from '../services/authService';
 import Button from '../components/Button';
 import Card from '../components/Card';
+import Input from '../components/Input';
 import { Shield, Lock } from 'lucide-react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { setUser, isAuthenticated, setError, error } = useAuthStore();
+  const { setUser, setLoading, isAuthenticated, setError, error, clearError } = useAuthStore();
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -16,16 +19,29 @@ const LoginPage = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleGoogleLogin = async () => {
-    try {
-      // This is a placeholder - integrate with Google OAuth in production
-      const token = 'google_token_here';
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (error) clearError();
+  };
 
-      const user = await authService.loginWithGoogle(token);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      setError('Email dan password harus diisi');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const user = await authService.login(formData.email, formData.password);
       setUser(user);
       navigate('/dashboard');
     } catch (err) {
-      setError('Login gagal. Silakan coba lagi.');
+      setError(err instanceof Error ? err.message : 'Login gagal. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,32 +96,42 @@ const LoginPage = () => {
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Login dengan</span>
-              </div>
-            </div>
+            {/* Login Form */}
+            <form onSubmit={handleLogin} className="space-y-4">
+              <Input
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="nama@example.com"
+                disabled={isLoading}
+              />
 
-            {/* Google Login Button */}
-            <Button
-              variant="primary"
-              size="lg"
-              className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
-              onClick={handleGoogleLogin}
-            >
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/>
-              </svg>
-              Masuk dengan Google
-            </Button>
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                placeholder="Masukkan password"
+                disabled={isLoading}
+              />
+
+              <Button
+                variant="primary"
+                size="lg"
+                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
+                disabled={isLoading}
+                type="submit"
+              >
+                {isLoading ? 'Sedang login...' : 'Masuk'}
+              </Button>
+            </form>
 
             {/* Helper Text */}
-            <p className="text-center text-gray-600 text-sm">
-              Gunakan akun email yang sudah terdaftar di sistem
+            <p className="text-center text-gray-600 text-xs">
+              Gunakan email dan password yang sudah terdaftar di sistem
             </p>
           </div>
         </Card>

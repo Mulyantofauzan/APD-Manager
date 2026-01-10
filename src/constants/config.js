@@ -1,5 +1,7 @@
 // API Configuration
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// For local development, API runs on Cloudflare Workers (localhost:8787)
+// For production, update VITE_API_URL in environment variables
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787/api';
 
 // User Roles
 export const USER_ROLES = {

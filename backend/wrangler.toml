@@ -1,0 +1,40 @@
+name = "apd-manager-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Build configuration
+[build]
+command = "npm install && npm run build"
+cwd = "."
+
+# Development environment
+[env.development]
+vars = { ENVIRONMENT = "development" }
+
+# Production environment
+[env.production]
+vars = { ENVIRONMENT = "production" }
+routes = [
+  { pattern = "api.apdmanager.com/*", zone_id = "" }
+]
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "apd-manager-db"
+database_id = ""
+migrations_dir = "migrations"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "apd-manager-db"
+database_id = ""
+
+# Analytics Engine (optional for logging)
+[analytics]
+enabled = false
+
+# Observability (optional)
+[observability]
+enabled = false
