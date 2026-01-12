@@ -1,7 +1,7 @@
 // API Configuration
-// For local development, API runs on Cloudflare Workers (localhost:8787)
+// For local development, API runs on localhost:3000 (Node/Vercel dev)
 // For production, update VITE_API_URL in environment variables
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // User Roles
 export const USER_ROLES = {

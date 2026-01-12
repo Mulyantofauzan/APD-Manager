@@ -45,61 +45,249 @@ const LoginPage = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-600 via-blue-600 to-blue-800 flex items-center justify-center px-4 py-12">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-10 w-96 h-96 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-32 right-10 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-      </div>
+  const styles = {
+    container: {
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0891b2 0%, #0284c7 50%, #1e3a8a 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '16px',
+      position: 'relative',
+      overflow: 'hidden'
+    },
+    bgBlob1: {
+      position: 'absolute',
+      top: '40px',
+      left: '40px',
+      width: '384px',
+      height: '384px',
+      background: 'rgba(34, 211, 238, 0.2)',
+      borderRadius: '50%',
+      filter: 'blur(64px)',
+      animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+    },
+    bgBlob2: {
+      position: 'absolute',
+      bottom: '-128px',
+      right: '40px',
+      width: '384px',
+      height: '384px',
+      background: 'rgba(96, 165, 250, 0.2)',
+      borderRadius: '50%',
+      filter: 'blur(64px)',
+      animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+    },
+    content: {
+      position: 'relative',
+      zIndex: 10,
+      width: '100%',
+      maxWidth: '448px'
+    },
+    header: {
+      textAlign: 'center',
+      marginBottom: '32px'
+    },
+    iconCircle: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '80px',
+      height: '80px',
+      background: 'white',
+      borderRadius: '50%',
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+      marginBottom: '24px'
+    },
+    title: {
+      fontSize: '48px',
+      fontWeight: 'bold',
+      color: 'white',
+      marginBottom: '8px',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    },
+    subtitle: {
+      fontSize: '18px',
+      color: 'rgba(165, 243, 252, 1)',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    },
+    card: {
+      background: 'rgba(255, 255, 255, 0.95)',
+      backdropFilter: 'blur(10px)',
+      borderRadius: '12px',
+      padding: '32px',
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      marginBottom: '24px'
+    },
+    errorBox: {
+      padding: '16px',
+      background: 'rgba(254, 242, 242, 1)',
+      border: '2px solid rgba(248, 113, 113, 1)',
+      borderRadius: '8px',
+      color: 'rgba(220, 38, 38, 1)',
+      fontSize: '14px',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '12px',
+      marginBottom: '20px'
+    },
+    featureItem: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      color: 'rgba(55, 65, 81, 1)',
+      marginBottom: '16px'
+    },
+    featureIcon: {
+      width: '32px',
+      height: '32px',
+      borderRadius: '50%',
+      background: 'rgba(207, 250, 254, 1)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0
+    },
+    formGroup: {
+      marginBottom: '16px'
+    },
+    label: {
+      display: 'block',
+      fontSize: '14px',
+      fontWeight: '600',
+      color: 'rgba(17, 24, 39, 1)',
+      marginBottom: '6px'
+    },
+    input: {
+      width: '100%',
+      padding: '12px 16px',
+      fontSize: '14px',
+      border: '1px solid rgba(229, 231, 235, 1)',
+      borderRadius: '8px',
+      boxSizing: 'border-box',
+      fontFamily: 'inherit',
+      transition: 'all 0.3s ease'
+    },
+    inputFocus: {
+      outline: 'none',
+      borderColor: 'rgba(8, 145, 178, 1)',
+      boxShadow: '0 0 0 3px rgba(8, 145, 178, 0.1)'
+    },
+    button: {
+      width: '100%',
+      padding: '12px 16px',
+      marginTop: '8px',
+      fontSize: '16px',
+      fontWeight: '600',
+      color: 'white',
+      background: 'linear-gradient(to right, rgba(6, 182, 212, 1), rgba(37, 99, 235, 1))',
+      border: 'none',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      fontFamily: 'inherit'
+    },
+    buttonHover: {
+      background: 'linear-gradient(to right, rgba(8, 180, 210, 1), rgba(30, 58, 138, 1))',
+      boxShadow: '0 10px 25px -5px rgba(8, 145, 178, 0.3)'
+    },
+    buttonDisabled: {
+      opacity: 0.6,
+      cursor: 'not-allowed'
+    },
+    helperText: {
+      textAlign: 'center',
+      color: 'rgba(75, 85, 99, 1)',
+      fontSize: '12px',
+      marginTop: '12px'
+    },
+    footer: {
+      marginTop: '32px',
+      textAlign: 'center',
+      color: 'rgba(165, 243, 252, 1)'
+    },
+    footerText: {
+      fontSize: '14px',
+      marginBottom: '8px'
+    },
+    footerSmall: {
+      fontSize: '12px',
+      color: 'rgba(186, 230, 253, 1)'
+    }
+  };
 
-      <div className="relative z-10 w-full max-w-md">
-        {/* Header Icon */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-lg mb-6">
-            <Shield size={40} className="text-cyan-600" />
+  return (
+    <div style={styles.container}>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.3; }
+        }
+        input:focus {
+          outline: none !important;
+          border-color: #0891b2 !important;
+          box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1) !important;
+        }
+        button:hover:not(:disabled) {
+          background: linear-gradient(to right, #0ab8d2, #1e3a8a) !important;
+          box-shadow: 0 10px 25px -5px rgba(8, 145, 178, 0.3) !important;
+        }
+      `}</style>
+
+      {/* Background blobs */}
+      <div style={styles.bgBlob1}></div>
+      <div style={styles.bgBlob2}></div>
+
+      {/* Content */}
+      <div style={styles.content}>
+        {/* Header */}
+        <div style={styles.header}>
+          <div style={styles.iconCircle}>
+            <Shield size={40} style={{ color: '#0891b2' }} />
           </div>
-          <h1 className="text-5xl font-bold text-white mb-2">APD Manager</h1>
-          <p className="text-cyan-100 text-lg">Sistem Pengelolaan Alat Pelindung Diri</p>
+          <h1 style={styles.title}>APD Manager</h1>
+          <p style={styles.subtitle}>Sistem Pengelolaan Alat Pelindung Diri</p>
         </div>
 
-        {/* Main Card */}
-        <Card className="bg-white/95 backdrop-blur shadow-2xl">
-          <div className="space-y-6">
-            {/* Error Message */}
-            {error && (
-              <div className="p-4 bg-red-50 border-2 border-red-200 rounded-lg text-red-700 text-sm font-medium flex items-start gap-3">
-                <span className="text-lg">⚠️</span>
-                <div>{error}</div>
-              </div>
-            )}
-
-            {/* Features List */}
-            <div className="space-y-3 py-4">
-              <div className="flex items-center gap-3 text-gray-700">
-                <div className="w-8 h-8 rounded-full bg-cyan-100 flex items-center justify-center flex-shrink-0">
-                  <Lock size={16} className="text-cyan-600" />
-                </div>
-                <span className="text-sm font-medium">Keamanan terjamin dengan enkripsi</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-700">
-                <div className="w-8 h-8 rounded-full bg-cyan-100 flex items-center justify-center flex-shrink-0">
-                  <Shield size={16} className="text-cyan-600" />
-                </div>
-                <span className="text-sm font-medium">Manajemen APD yang komprehensif</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-700">
-                <div className="w-8 h-8 rounded-full bg-cyan-100 flex items-center justify-center flex-shrink-0">
-                  <Lock size={16} className="text-cyan-600" />
-                </div>
-                <span className="text-sm font-medium">Akses real-time ke data penting</span>
-              </div>
+        {/* Card */}
+        <div style={styles.card}>
+          {/* Error */}
+          {error && (
+            <div style={styles.errorBox}>
+              <span style={{ fontSize: '18px' }}>⚠️</span>
+              <div>{error}</div>
             </div>
+          )}
 
-            {/* Login Form */}
-            <form onSubmit={handleLogin} className="space-y-4">
-              <Input
-                label="Email"
+          {/* Features */}
+          <div style={{ marginBottom: '24px', paddingBottom: '16px' }}>
+            <div style={styles.featureItem}>
+              <div style={styles.featureIcon}>
+                <Lock size={16} style={{ color: '#0891b2' }} />
+              </div>
+              <span style={{ fontSize: '14px', fontWeight: '500' }}>Keamanan terjamin dengan enkripsi</span>
+            </div>
+            <div style={styles.featureItem}>
+              <div style={styles.featureIcon}>
+                <Shield size={16} style={{ color: '#0891b2' }} />
+              </div>
+              <span style={{ fontSize: '14px', fontWeight: '500' }}>Manajemen APD yang komprehensif</span>
+            </div>
+            <div style={styles.featureItem}>
+              <div style={styles.featureIcon}>
+                <Lock size={16} style={{ color: '#0891b2' }} />
+              </div>
+              <span style={{ fontSize: '14px', fontWeight: '500' }}>Akses real-time ke data penting</span>
+            </div>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleLogin}>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Email</label>
+              <input
+                style={styles.input}
                 name="email"
                 type="email"
                 value={formData.email}
@@ -107,9 +295,12 @@ const LoginPage = () => {
                 placeholder="nama@example.com"
                 disabled={isLoading}
               />
+            </div>
 
-              <Input
-                label="Password"
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Password</label>
+              <input
+                style={styles.input}
                 name="password"
                 type="password"
                 value={formData.password}
@@ -117,29 +308,40 @@ const LoginPage = () => {
                 placeholder="Masukkan password"
                 disabled={isLoading}
               />
+            </div>
 
-              <Button
-                variant="primary"
-                size="lg"
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
-                disabled={isLoading}
-                type="submit"
-              >
-                {isLoading ? 'Sedang login...' : 'Masuk'}
-              </Button>
-            </form>
+            <button
+              style={{
+                ...styles.button,
+                ...(isLoading ? styles.buttonDisabled : {})
+              }}
+              disabled={isLoading}
+              type="submit"
+              onMouseEnter={(e) => {
+                if (!isLoading) {
+                  e.target.style.background = styles.buttonHover.background;
+                  e.target.style.boxShadow = styles.buttonHover.boxShadow;
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = styles.button.background;
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              {isLoading ? 'Sedang login...' : 'Masuk'}
+            </button>
+          </form>
 
-            {/* Helper Text */}
-            <p className="text-center text-gray-600 text-xs">
-              Gunakan email dan password yang sudah terdaftar di sistem
-            </p>
-          </div>
-        </Card>
+          {/* Helper */}
+          <p style={styles.helperText}>
+            Gunakan email dan password yang sudah terdaftar di sistem
+          </p>
+        </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center text-cyan-100">
-          <p className="text-sm">© 2026 APD Manager. Semua hak dilindungi.</p>
-          <p className="text-xs mt-2 text-cyan-200">Versi 1.0.0 | SPA & PWA Ready</p>
+        <div style={styles.footer}>
+          <p style={styles.footerText}>© 2026 APD Manager. Semua hak dilindungi.</p>
+          <p style={styles.footerSmall}>Versi 1.0.0 | SPA & PWA Ready</p>
         </div>
       </div>
     </div>
