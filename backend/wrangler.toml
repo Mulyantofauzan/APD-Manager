@@ -15,21 +15,18 @@ vars = { ENVIRONMENT = "development" }
 # Production environment
 [env.production]
 vars = { ENVIRONMENT = "production" }
-routes = [
-  { pattern = "api.apdmanager.com/*", zone_id = "" }
-]
 
 # D1 Database binding
 [[d1_databases]]
 binding = "DB"
 database_name = "apd-manager-db"
-database_id = ""
+database_id = "61095fba-31f7-40f8-9547-097c0fd58aac"
 migrations_dir = "migrations"
 
 [[env.production.d1_databases]]
 binding = "DB"
 database_name = "apd-manager-db"
-database_id = ""
+database_id = "61095fba-31f7-40f8-9547-097c0fd58aac"
 
 # Analytics Engine (optional for logging)
 [analytics]
