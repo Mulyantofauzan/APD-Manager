@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 /**
  * Hash password using PBKDF2
@@ -37,7 +37,7 @@ function validatePasswordStrength(password) {
   return { valid: true };
 }
 
-module.exports = {
+export {
   hashPassword,
   verifyPassword,
   validatePasswordStrength

@@ -40,7 +40,7 @@ function corsMiddleware(req, res) {
   return false;
 }
 
-module.exports = {
+export {
   corsMiddleware,
   setupCors
 };

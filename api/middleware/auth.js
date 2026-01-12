@@ -1,4 +1,4 @@
-const { extractTokenFromHeader, verifyToken } = require('../utils/jwt');
+import { extractTokenFromHeader, verifyToken } from '../utils/jwt.js';
 
 /**
  * Authentication middleware - verify JWT token
@@ -39,7 +39,7 @@ function requireRole(user, allowedRoles) {
   }
 }
 
-module.exports = {
+export {
   authMiddleware,
   getUser,
   requireRole

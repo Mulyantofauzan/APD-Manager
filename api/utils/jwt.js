@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-min-32-chars!!!';
 const JWT_EXPIRE = '7d';
@@ -38,7 +38,7 @@ function extractTokenFromHeader(authHeader) {
   return parts[1];
 }
 
-module.exports = {
+export {
   generateToken,
   verifyToken,
   extractTokenFromHeader

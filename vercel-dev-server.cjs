@@ -2,35 +2,17 @@
  * Simple dev server untuk test Vercel API Routes locally
  * Run: node vercel-dev-server.js
  */
-import http from 'http';
-import url from 'url';
-import loginHandler from './api/auth/login.js';
-import meHandler from './api/auth/me.js';
-import dotenv from 'dotenv';
+const http = require('http');
+const url = require('url');
+require('dotenv').config({ path: '.env.local' });
 
-dotenv.config({ path: '.env.local' });
+// Import API endpoints
+const loginHandler = require('./api/auth/login');
+const meHandler = require('./api/auth/me');
 
 const PORT = process.env.PORT || 3000;
 
-// Create a wrapper to add Express-like methods to response object
-function wrapResponse(res) {
-  res.status = function(code) {
-    this.statusCode = code;
-    return this;
-  };
-
-  res.json = function(data) {
-    this.setHeader('Content-Type', 'application/json');
-    this.end(JSON.stringify(data));
-  };
-
-  return res;
-}
-
 const server = http.createServer(async (req, res) => {
-  // Wrap response object
-  res = wrapResponse(res);
-
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
 
@@ -54,19 +36,22 @@ const server = http.createServer(async (req, res) => {
 });
 
 async function handleRequest(pathname, req, res) {
+  // Set content type
+  res.setHeader('Content-Type', 'application/json');
+
   try {
     if (pathname === '/api/auth/login') {
       return await loginHandler(req, res);
     } else if (pathname === '/api/auth/me') {
       return await meHandler(req, res);
     } else if (pathname === '/health') {
-      return res.status(200).json({ status: 'ok' });
+      return res.writeHead(200).end(JSON.stringify({ status: 'ok' }));
     } else {
-      return res.status(404).json({ error: 'Not found' });
+      return res.writeHead(404).end(JSON.stringify({ error: 'Not found' }));
     }
   } catch (error) {
     console.error('Server error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.writeHead(500).end(JSON.stringify({ error: 'Internal server error' }));
   }
 }
 

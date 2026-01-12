@@ -1,13 +1,13 @@
-const { corsMiddleware } = require('../middleware/cors');
-const { generateToken } = require('../utils/jwt');
-const { verifyPassword } = require('../utils/password');
+import { corsMiddleware } from '../middleware/cors.js';
+import { generateToken } from '../utils/jwt.js';
+import { verifyPassword } from '../utils/password.js';
 
 // Hardcoded user untuk testing (dalam production, query dari database)
 const USERS = [
   {
     id: 1,
     email: 'admin@apd.com',
-    password_hash: 'f7e9e1c4a8d9c6b3e2a5f8d1b4c7e9a2c5f8e1b4:3d6f1e2a4c5b7e8f9a1d2c3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f',
+    password_hash: 'f045ac5b82821dee5b0bc9418e825bddf34cb802ec85ede443626e6c2157d70b:34ed2e491408df0ae5bc64ec82b6f2fc37766d3d146b6884088e673387bd5a14b9b14978230db742c6810f56402014d00ac4b2fd10bb97ec69fadfab1e30b498',
     nama: 'Administrator',
     role: 'admin',
     is_active: true
@@ -17,7 +17,7 @@ const USERS = [
 /**
  * Login API endpoint
  */
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Handle CORS preflight
   if (corsMiddleware(req, res)) {
     return;

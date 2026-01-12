@@ -1,10 +1,10 @@
-const { corsMiddleware } = require('../middleware/cors');
-const { authMiddleware } = require('../middleware/auth');
+import { corsMiddleware } from '../middleware/cors.js';
+import { authMiddleware } from '../middleware/auth.js';
 
 /**
  * Get current user info
  */
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Handle CORS preflight
   if (corsMiddleware(req, res)) {
     return;
